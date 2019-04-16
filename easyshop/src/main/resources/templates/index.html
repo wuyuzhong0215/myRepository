@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+    <h1>欢迎${emp.euUserName}登陆！</h1>
+    <ul>
+        <#list emps as emp>
+        <li>${emp.euUserName!"未知"}</li>
+        </#list>
+    </ul>
+</body>
+</html>

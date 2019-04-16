@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--配置shiro过滤器：该过滤器的ID必须与web.xml中的过滤器的name一样-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="loginUrl" value="index.jsp"></property>
+        <property name="unauthorizedUrl" value="403.html"></property>
+        <property name="filterChainDefinitions">
+            <value>
+                /login.html=anon
+                /index.jsp=anon
+                /doLogin=anon
+                /*=authc
+            </value>
+        </property>
+        <property name="securityManager" ref="securityManager"></property>
+    </bean>
+
+    <!--配置安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="customRealm"></property>
+    </bean>
+
+    <!--配置自定义域-->
+    <bean id="customRealm" class="com.shirospring.realm.CustomRealm">
+        <!--添加加密-->
+        <property name="credentialsMatcher" ref="matcher"></property>
+        <!--配置缓存-->
+        <property name="cacheManager" ref="cacheManager"></property>
+     </bean>
+
+    <!--配置加密-->
+    <bean id="matcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"></property>
+        <property name="hashIterations" value="3"></property>
+    </bean>
+
+    <!--配置缓存管理器-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"></bean>
+</beans>

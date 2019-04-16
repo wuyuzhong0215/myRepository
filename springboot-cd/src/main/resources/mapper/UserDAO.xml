@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springbootcd.test.dao.UserDAO">
+  <resultMap id="BaseResultMap" type="com.springbootcd.test.pojo.User">
+    <id column="eu_user_id" jdbcType="INTEGER" property="euUserId" />
+    <result column="eu_user_name" jdbcType="VARCHAR" property="euUserName" />
+    <result column="eu_password" jdbcType="VARCHAR" property="euPassword" />
+    <result column="eu_sex" jdbcType="BIT" property="euSex" />
+    <result column="eu_birthday" jdbcType="DATE" property="euBirthday" />
+    <result column="eu_identity_code" jdbcType="VARCHAR" property="euIdentityCode" />
+    <result column="eu_email" jdbcType="VARCHAR" property="euEmail" />
+    <result column="eu_mobile" jdbcType="VARCHAR" property="euMobile" />
+    <result column="eu_address" jdbcType="VARCHAR" property="euAddress" />
+    <result column="eu_status" jdbcType="BIT" property="euStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    eu_user_id, eu_user_name, eu_password, eu_sex, eu_birthday, eu_identity_code, eu_email, 
+    eu_mobile, eu_address, eu_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from easyshop_user
+    where eu_user_id = #{euUserId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from easyshop_user
+    where eu_user_id = #{euUserId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springbootcd.test.pojo.User">
+    insert into easyshop_user (eu_user_id, eu_user_name, eu_password, 
+      eu_sex, eu_birthday, eu_identity_code, 
+      eu_email, eu_mobile, eu_address, 
+      eu_status)
+    values (#{euUserId,jdbcType=INTEGER}, #{euUserName,jdbcType=VARCHAR}, #{euPassword,jdbcType=VARCHAR}, 
+      #{euSex,jdbcType=BIT}, #{euBirthday,jdbcType=DATE}, #{euIdentityCode,jdbcType=VARCHAR}, 
+      #{euEmail,jdbcType=VARCHAR}, #{euMobile,jdbcType=VARCHAR}, #{euAddress,jdbcType=VARCHAR}, 
+      #{euStatus,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springbootcd.test.pojo.User">
+    insert into easyshop_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="euUserId != null">
+        eu_user_id,
+      </if>
+      <if test="euUserName != null">
+        eu_user_name,
+      </if>
+      <if test="euPassword != null">
+        eu_password,
+      </if>
+      <if test="euSex != null">
+        eu_sex,
+      </if>
+      <if test="euBirthday != null">
+        eu_birthday,
+      </if>
+      <if test="euIdentityCode != null">
+        eu_identity_code,
+      </if>
+      <if test="euEmail != null">
+        eu_email,
+      </if>
+      <if test="euMobile != null">
+        eu_mobile,
+      </if>
+      <if test="euAddress != null">
+        eu_address,
+      </if>
+      <if test="euStatus != null">
+        eu_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="euUserId != null">
+        #{euUserId,jdbcType=INTEGER},
+      </if>
+      <if test="euUserName != null">
+        #{euUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="euPassword != null">
+        #{euPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="euSex != null">
+        #{euSex,jdbcType=BIT},
+      </if>
+      <if test="euBirthday != null">
+        #{euBirthday,jdbcType=DATE},
+      </if>
+      <if test="euIdentityCode != null">
+        #{euIdentityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="euEmail != null">
+        #{euEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="euMobile != null">
+        #{euMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="euAddress != null">
+        #{euAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="euStatus != null">
+        #{euStatus,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springbootcd.test.pojo.User">
+    update easyshop_user
+    <set>
+      <if test="euUserName != null">
+        eu_user_name = #{euUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="euPassword != null">
+        eu_password = #{euPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="euSex != null">
+        eu_sex = #{euSex,jdbcType=BIT},
+      </if>
+      <if test="euBirthday != null">
+        eu_birthday = #{euBirthday,jdbcType=DATE},
+      </if>
+      <if test="euIdentityCode != null">
+        eu_identity_code = #{euIdentityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="euEmail != null">
+        eu_email = #{euEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="euMobile != null">
+        eu_mobile = #{euMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="euAddress != null">
+        eu_address = #{euAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="euStatus != null">
+        eu_status = #{euStatus,jdbcType=BIT},
+      </if>
+    </set>
+    where eu_user_id = #{euUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springbootcd.test.pojo.User">
+    update easyshop_user
+    set eu_user_name = #{euUserName,jdbcType=VARCHAR},
+      eu_password = #{euPassword,jdbcType=VARCHAR},
+      eu_sex = #{euSex,jdbcType=BIT},
+      eu_birthday = #{euBirthday,jdbcType=DATE},
+      eu_identity_code = #{euIdentityCode,jdbcType=VARCHAR},
+      eu_email = #{euEmail,jdbcType=VARCHAR},
+      eu_mobile = #{euMobile,jdbcType=VARCHAR},
+      eu_address = #{euAddress,jdbcType=VARCHAR},
+      eu_status = #{euStatus,jdbcType=BIT}
+    where eu_user_id = #{euUserId,jdbcType=INTEGER}
+  </update>
+</mapper>

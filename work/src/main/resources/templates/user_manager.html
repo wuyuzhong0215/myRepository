@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Manage Page</title>
+    <link rel="stylesheet" th:href="@{/css/themes/default/easyui.css}">
+    <link rel="stylesheet" th:href="@{/css/themes/icon.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script th:src="@{/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body>
+    <table id="dg"></table>
+    <div id="toolbar">
+        <div>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="openAddDialog()">添加</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deleteUser()">删除</a>
+        </div>
+        <div>
+            username：<input type="text" name="userName" id="userName">
+            userrole:<input type="text" id="roleId" class="easyui-combobox" data-options="url:'/role/list',valueField:'roleId',textField:'roleName'">
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchUser()">搜索</a>
+        </div>
+    </div>
+    <div id="dlg" class="easyui-dialog" data-options="closed:true,modal:true,buttons:'#but'" style="padding: 20px;width:600px;height:400px">
+        <form id="ff">
+            <table>
+                <tr>
+                    <td>用户名：</td>
+                    <td>
+                        <input type="text" name="userName" class="easyui-validatebox" data-options="required:true">
+                    </td>
+                    <td>用户密码：</td>
+                    <td>
+                        <input type="password" name="password">
+                    </td>
+                </tr>
+                <tr>
+                    <td>角色：</td>
+                    <td>
+                        <input type="text" name="role.roleId" id="role">
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td valign="top">备注：</td>
+                    <td colspan="3">
+                        <textarea name="userDescription" id="" cols="40" rows="10"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+<div id="but">
+    <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="addUser()">保存</a>
+    <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeDlg()">关闭</a>
+</div>
+
+    <script th:inline="none">
+        $(function(){
+            $("#dg").datagrid({
+                url: '/user/list',
+                title:'用户管理',
+                pagination:true,
+                pageNumber:1,
+                pageSize:5,
+                fitColumns:true,
+                pageList:[5,10,15],
+                rownumbers:true,
+                striped:true,
+                toolbar:'#toolbar',
+                columns:[[
+                    {checkbox:true},
+                    {field:'userId',align:'center',title:'编号',width:20},
+                    {field:'userName',align:'center',title:'用户名',width:100,},
+                    {field:'roleId',align:'center',title:'用户角色',width:100,formatter:function(value,rowdata,index){
+                            return rowdata.role.roleName;
+                        }},
+                    {field:'userDescription',align:'center',title:'备注',width:200},
+                ]]
+            });
+        })
+
+        function searchUser() {
+            var params = {};
+            params.userName = $("#userName").val();
+            params.roleId = $("#roleId").combobox("getValue");
+            $("#dg").datagrid("reload",params);
+        }
+
+        function openAddDialog(){
+            $("#dlg").dialog("open").dialog("setTitle","添加用户");
+            $("#role").combobox({
+                url:'/role/list',
+                valueField:'roleId',
+                textField:'roleName'
+            })
+        }
+
+        function addUser(){
+            $("#ff").form("submit",{
+                url:'/user/add',
+                success:function(result){//string json
+                    result = eval("("+result+")");
+                    if(result.code == 0){
+                        $.messager.alert('系统提示','用户添加成功');
+                        closeDlg();
+                        $("#ff").form("clear");
+                        $("#dg").datagrid("reload");
+                    }else{
+                        $.messager.alert('系统提示',result.message);
+                    }
+                }
+            })
+        }
+
+        function closeDlg(){
+            $("#dlg").dialog("close");
+        }
+
+        function deleteUser(){
+            var rows = $("#dg").datagrid("getSelections");
+            if(rows.length ==0){
+                $.messager.alert('系统提示','请选择一条数据');
+                return ;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

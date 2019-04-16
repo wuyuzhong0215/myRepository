@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/themes/default/easyui.css}">
+    <link rel="stylesheet" th:href="@{/css/themes/icon.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script th:src="@{/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'north',title:'North Title',split:true,height:100"></div>
+    <div data-options="region:'south',title:'South Title',split:true,height:100"></div>
+    <div data-options="region:'west',title:'West Title',split:true,width:200">
+        <ul id="tree">
+
+        </ul>
+    </div>
+    <div data-options="region:'center',title:'Center Title'" style="padding:5px;background:#eee;">
+        <div id="tb" class="easyui-tabs" data-options="fit:true">
+            <div data-options="title:'首页'">
+                <h1>欢迎</h1>
+            </div>
+        </div>
+    </div>
+ Welcome to main page
+    <script>
+        $(function () {
+            $("#tree").tree({
+                url:'/auth/loadTree',
+                lines:true,
+                animate:true,
+                onClick:function (node) {
+                    if(node.attributes.authPath){
+                        openTab(node);
+                    }
+                }
+            })
+        })
+
+        function openTab(node) {
+            var exists = $("#tb").tabs("exists",node.text);
+            if (exists){
+                $("#tb").tabs("select",node.text);
+            } else{
+                $("#tb").tabs("add",{
+                    title:node.text,
+                    href:node.attributes.authPath,
+                    closable:true
+                })
+            }
+        }
+    </script>
+</body>
+</html>

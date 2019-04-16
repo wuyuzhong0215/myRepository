@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wn.easyshop.dao.EmpMapper">
+
+	<resultMap type="com.wn.easyshop.entity.Emp" id="userToProperty">
+		<id column="eu_user_id" property="euUserId" />
+		<result column="eu_user_name" property="euUserName" />
+		<result column="eu_password" property="euPassword" />
+		<result column="eu_sex" property="euSex" />
+		<result column="eu_birthday" property="euBirthday" />
+		<result column="eu_identity_code" property="euIdentityCode" />
+		<result column="eu_email" property="euEmail" />
+		<result column="eu_mobile" property="euMobile" />
+		<result column="eu_address" property="euAddress" />
+		<result column="eu_status" property="euStatus" />
+	</resultMap>
+
+	<select id="login" resultMap="userToProperty" resultType="com.wn.easyshop.entity.Emp">
+		select
+		* from easyshop_user where
+		eu_user_name=#{euUserName} and
+		eu_password=#{euPassword}
+	</select>
+
+	<select id="getUsers" resultMap="userToProperty" resultType="com.wn.easyshop.entity.Emp">
+		select * from easyshop_user
+	</select>
+
+</mapper>

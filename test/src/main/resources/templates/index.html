@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{myapp.msg}"></title>
+</head>
+<body>
+    <span th:text="${msg}"></span>
+    <div th:object="${emp}">
+        <span th:text="*{empId}"></span>
+        <span th:text="*{empName}"></span>
+        <span th:text="*{birthday}"></span>
+    </div>
+    <br>
+    <a th:href="@{|/edit?msg=${msg}|}">edit</a>
+    <a th:href="@{'/next?msg='+${msg}+'02'}">edit</a>
+
+</body>
+</html>

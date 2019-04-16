@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1" width="800px" align="center">
+    <caption>Employee List</caption>
+    <tr>
+        <td colspan="7">
+            <form action="getlist" method="post">
+                <input type="hidden" id="CP" name="currentPage" value="1">
+                姓名：<input type="text" name="ename" size="10" th:value="${vo.ename}">
+                部门：<select name="deptno">
+                        <option value="">--请选择--</option>
+                        <option th:each="dept:${deptList}" th:value="${dept.deptno}" th:text="${dept.dname}"
+                        th:selected="${vo.deptno==dept.deptno}"/>
+                      </select>
+                入职日期:
+                <input type="text" size="10" name="begin" th:value="${#dates.format(vo.begin,'yyyy-MM-dd')}">
+                离职日期:
+                <input type="text" size="10" name="end" th:value="${#dates.format(vo.end,'yyyy-MM-dd')}"/>
+                <input type="submit" value="查询">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>姓名</td>
+        <td>职位</td>
+        <td>薪水</td>
+        <td>奖金</td>
+        <td>部门</td>
+        <td>入职日期</td>
+        <td>操作</td>
+    </tr>
+    <tr th:each="emp,state:${pageInfo.list}" th:style="|background-color:${state.even?'red':'yellow'}|">
+        <td>
+            [[${emp.ename}]]
+        </td>
+        <td>
+            [[${emp.job}]]
+        </td>
+        <td>
+            [[${#numbers.formatDecimal(emp.sal,0,2)}]]
+        </td>
+        <td>
+            <span th:if="${emp.comm == null}">
+                无奖金
+            </span>
+            <span th:unless="${emp.comm == null}">
+               [[${emp.comm}]]
+            </span>
+        </td>
+        <td>
+            [[${emp.dept.dname}]]
+        </td>
+        <td>
+            [[${#dates.format(emp.hiredate,'yyyy-MM-dd')}]]
+        </td>
+        <td>
+            <a th:href="@{|/edit/${emp.empno}|}">Edit</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

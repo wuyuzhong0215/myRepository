@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Datagrid</title>
+    <link rel="stylesheet" th:href="@{/css/themes/icon.css}">
+    <link rel="stylesheet" th:href="@{/css/themes/default/easyui.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script th:src="@{/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body>
+    <table id="dg"></table>
+
+    <script th:inline="none">
+        $(function () {
+            $("#dg").datagrid({
+                title:'数据表单',
+                columns:[[
+                    {field:'ename',title:'姓名',width:100,align:'center'},
+                    {field:'job',title:'职位',width:100,align:'center'},
+                    {field:'sal',title:'薪水',width:100,align:'center'},
+                    {field:'dname',title:'部门',width:100,align:'center',formatter:function (value,rowdata,index) {
+                            return rowdata.dept.dname;
+                        }},
+                    {field:'hiredate',title:'入职日期',width:100,align:'center'},
+                    {field:'operate',title:'操作',width:100,align:'center',formatter:function () {
+                            return '<a href=#>编辑</a>'
+                        }}
+                ]],
+                url:'/list',
+                pagination:true,
+                rownumbers:true,
+                pageNumber:1,
+                pageSize:5,
+                pageList:[5,10,15]
+
+            })
+        })
+    </script>
+</body>
+</html>

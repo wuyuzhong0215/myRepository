@@ -1,0 +1,11 @@
+server:
+  servlet:
+    context-path: /springbootdemo
+spring:
+  mvc:
+    date-format: yyyy-MM-dd
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+  profiles:
+    active: dev

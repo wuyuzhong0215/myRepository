@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" th:href="@{/css/themes/icon.css}">
+    <link rel="stylesheet" th:href="@{/css/themes/default/easyui.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script th:src="@{/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body class="easyui-layout">
+    Index
+    <div data-options="region:'north',title:'头部',split:false,height:100,collapsible:false">header</div>
+    <div data-options="region:'center',title:'中央',split:true">
+        <div id="tb" class="easyui-tabs" data-options="width:900,height:400">
+            <div data-options="title:'tab1',iconCls:'icon-ok',closable:true">
+                tab1 content
+            </div>
+            <div data-options="title:'tab2'">
+                <table class="easyui-datagrid" data-options="width:700,fitColumns:true,toolbar:'#toolbar',
+striped:true,pagination:true,rownumbers:true,singleSelect:true,pagePosition:'bottom',
+pageNumber:1,pageList:[5,10,15],pageSize:5">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'empno',checkbox:true"></th>
+                            <th data-options="title:'姓名',field:'ename',width:100"></th>
+                            <th data-options="title:'职位',field:'job',width:100"></th>
+                            <th data-options="title:'薪水',field:'sal',width:100"></th>
+                            <th data-options="title:'部门',field:'deptno',width:100"></th>
+                            <th data-options="title:'入职日期',field:'hiredate',width:100"></th>
+                            <th data-options="title:'操作',field:'operate',width:100"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                    </tr>
+                    <tr>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                    </tr>
+                    <tr>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                    </tr>
+                    <tr>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                    </tr>
+                    <tr>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                        <td>aaaa</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div data-options="title:'tab3',content:'tab3'"></div>
+        </div>
+    </div>
+    <div data-options="region:'west',title:'左部',split:true,width:200">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addTabs()">添加</a>
+    </div>
+    <div data-options="region:'south',title:'脚部',height:100,split:false,collapsible:false">foot</div>
+
+    <!--工具栏-->
+    <div id="toolbar">
+        <a href="#" class="easyui-linkbutton" data-options="title:'edit',iconCls:'icon-edit',plain:true"></a>
+        <a href="#" class="easyui-linkbutton" data-options="title:'help',iconCls:'icon-help',plain:true"></a>
+    </div>
+<script>
+    function addTabs() {
+        var exists = $("#tb").tabs("exists","newtab");
+        if (exists){
+            $("#tb").tabs("select","newtab");
+        } else {
+            $("#tb").tabs("add",{
+                title:'newtab',
+                content:'new tab',
+                closable:true
+            })
+        }
+    }
+
+</script>
+</body>
+</html>
